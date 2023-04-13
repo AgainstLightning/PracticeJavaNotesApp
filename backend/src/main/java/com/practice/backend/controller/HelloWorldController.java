@@ -1,21 +1,22 @@
 package com.practice.backend.controller;
 import java.util.HashMap;
-import java.util.Map;
+
+import com.practice.backend.model.Visit;
+import com.practice.backend.service.VisitService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.ResponseEntity;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 public class HelloWorldController {
-    @GetMapping("/hello")
+    @Autowired
+    private VisitService visitService;
+
+    @GetMapping("/api/hello")
     public HashMap<String, String> HelloWorld(){
-        LocalDateTime currentTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        String formattedTime = currentTime.format(formatter);
-        var response = new HashMap<String, String>();
-        response.put("message", "Hello world! It is currently " + formattedTime + " on the server!");
-        return response;
+        Visit visit = visitService.logVisit();
+        return new HashMap<>(){{
+            put("message", "Your visit at " + visit.getVisitedAt() + " has been logged!");
+        }};
     }
 }
