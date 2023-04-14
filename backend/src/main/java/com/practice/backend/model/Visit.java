@@ -13,7 +13,7 @@ public class Visit {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @Column(nullable = false)
-  private String ip;
+  private String accountId;
   @Column(nullable = false)
   private LocalDateTime visitTime;
 
@@ -28,11 +28,11 @@ public class Visit {
     return this.visitTime;
   }
 
-  public void setIp(String ip) {
-    this.ip = ip;
+  public void setAccountId(String accountId) {
+    this.accountId = accountId;
   }
 
-  public String getIp() {
-    return ip;
+  public String getAccountId() {
+    return this.accountId;
   }
 }

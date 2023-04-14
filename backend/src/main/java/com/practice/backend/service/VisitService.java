@@ -17,7 +17,7 @@ public class VisitService {
   public Visit logVisit(String userIp) {
     Visit visit = new Visit();
     visit.setVisitedAt(LocalDateTime.now());
-    visit.setIp(userIp);
+    visit.setAccountId(userIp);
     return visitRepository.save(visit);
   }
 
@@ -26,11 +26,11 @@ public class VisitService {
   }
 
   public long getUserVisitCountByIp(String userIp) {
-    return visitRepository.countByIp(userIp);
+    return visitRepository.countByAccountId(userIp);
   }
   
   @Transactional
   public void deleteVisitsByIp(String ip) {
-    visitRepository.deleteByIp(ip);
+    visitRepository.deleteByAccountId(ip);
   }
 }
