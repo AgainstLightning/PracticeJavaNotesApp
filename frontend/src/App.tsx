@@ -6,6 +6,7 @@ function App() {
   const [totalVisitCount, setTotalVisitCount] = useState<number | null>(null);
   const [userVisitCount, setUserVisitCount] = useState<number | null>(null);
   const [accountId, setAccountId] = useState('account_1');
+  const [loggedInAccountId, setLoggedInAccountId] = useState<string | null>(null);
   const [data, setData] = useState<any>(null);
   const [hasCleared, setHasCleared] = useState(false);
   const buttonStyle = hasCleared ? {
@@ -27,6 +28,7 @@ function App() {
     api.submitVisit(accountId)
       .then((data) => {
         setData(data);
+        setLoggedInAccountId(data.accountId);
         setTotalVisitCount(data.totalVisitCount);
         setUserVisitCount(data.userVisitCount);
       })
@@ -36,6 +38,8 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Login Tracker</h1>
+      <h3>Choose an account to login with</h3>
       <form>
         <label htmlFor="account1">Account 1</label>
         <input
@@ -64,14 +68,21 @@ function App() {
           checked={accountId === 'account_3'}
           onChange={handleAccountChange}
         />
-        <button id="submitVisit" type="button" onClick={handleSubmitVisit}>
-          Submit Visit
-        </button>
+        <br />
+        <button id="submitVisit" type="button" onClick={handleSubmitVisit}>LOGIN</button>
       </form>
-      <p>Total visits: {totalVisitCount}</p>
-      <p>Your visits: {userVisitCount}</p>
-      <button style={buttonStyle} disabled={hasCleared} onClick={handleClearVisitsClick}>Clear my visit count</button>
-      <p>{hasCleared ? "Your visit count has been cleared." : ""}</p>
+      {
+        loggedInAccountId
+          ? <div>
+            <p>Current account: {loggedInAccountId}</p>
+            <p>Total visits: {totalVisitCount}</p>
+            <p>Your visits: {userVisitCount}</p>
+            {userVisitCount && <button onClick={handleClearVisitsClick}>Clear login count</button>}
+            <p>{hasCleared ? "Your visit count has been cleared, hackerman!" : ""}</p>
+
+          </div>
+          : <p>Not logged in</p>
+      }
     </div>
   )
 }
