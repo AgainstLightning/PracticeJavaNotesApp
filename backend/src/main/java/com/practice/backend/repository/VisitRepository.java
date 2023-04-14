@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VisitRepository extends JpaRepository<Visit, Long> {
   long countByIp(String ip);
+  void deleteByIp(String userIp);
 }

@@ -4,6 +4,8 @@ import com.practice.backend.model.Visit;
 import com.practice.backend.repository.VisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 
 @Service
@@ -25,5 +27,10 @@ public class VisitService {
 
   public long getUserVisitCountByIp(String userIp) {
     return visitRepository.countByIp(userIp);
+  }
+  
+  @Transactional
+  public void deleteVisitsByIp(String ip) {
+    visitRepository.deleteByIp(ip);
   }
 }
